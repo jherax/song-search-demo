@@ -7,10 +7,26 @@ body {
   font-size: 1.7rem;
 }
 
-input {
+.input-container input {
+  padding: 1px 5px;
   border: 1px solid #ccc;
+  font-size: 0.8em;
 }
 
 .welcome {
   margin-bottom: 2rem;
+}
+
+.welcome h1 {
+  margin: 0.8em 0;
+}
+
+.results-container {
+  margin: 10px 6px;
+  font-size: 0.6em;
+  color: #555;
+}
+
+.search-results li:nth-child(2n) {
+  background-color: oldlace;
 }
