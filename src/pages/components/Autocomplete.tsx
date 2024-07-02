@@ -53,6 +53,7 @@ export default function Autocomplete(props: AutocompleteProps) {
         </div>
         <div className='results-container'>
           <ul className="search-results">
+            {!results.length && <li className="empty-results">There are no matches</li>}
             {results.map((song)=> {
               return (
                 <li key={`item-${song.id}`}>
