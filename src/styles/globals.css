@@ -27,6 +27,10 @@ body {
   color: #555;
 }
 
+.search-results li {
+  cursor: pointer;
+}
+
 .search-results li:nth-child(2n) {
   background-color: oldlace;
 }
@@ -41,4 +45,27 @@ body {
 
 .search-results .song-duration {
   font-size: 0.55em;
+}
+
+.song-details-container {
+  margin: 20px 0;
+  font-size: 0.65em;
+  color: #555;
+}
+
+.song-details-container .song-card {
+  border-collapse: separate;
+  border: solid #444 1px;
+  border-radius: 6px;
+  padding: 2px 8px;
+}
+
+.song-details-container .song-card th,
+.song-details-container .song-card td {
+  padding: 2px 5px;
+  text-align: left;
+}
+
+.capitalize {
+  text-transform: capitalize;
 }
