@@ -50,9 +50,9 @@ export default function Autocomplete(props: AutocompleteProps) {
     }
   };
 
-  const onSuggestionClick = (song: Song) => () => {
+  const onSuggestionClick = React.useCallback((song: Song) => () => {
     setSongDetails(song);
-  }
+  }, []);
 
   return (
     <React.Fragment>

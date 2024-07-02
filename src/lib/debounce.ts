@@ -1,5 +1,4 @@
-type ArgumentTypes<F extends Function> = F extends (...args: infer A) => any ? A : never;
-type Callback = (...args: any[]) => void;
+type AnyFunction = (...args: any[]) => any;
 
 /**
  * Creates a debounced version of the `callback` that controls
@@ -8,10 +7,10 @@ type Callback = (...args: any[]) => void;
  * @param callback The function to defer the execution
  * @param delay Milliseconds to delay the execution
  */
-export default function debounce<TFunc extends Function = Callback>(callback: TFunc, delay: number) {
+export default function debounce<TFunc extends AnyFunction>(callback: TFunc, delay: number) {
   let timer: NodeJS.Timeout;
   
-  return function debouncedCallback(...args: ArgumentTypes<typeof callback>) {
+  return function debouncedCallback(...args: Parameters<typeof callback>) {
     clearTimeout(timer);
     timer = setTimeout(() => {
       callback(...args);
