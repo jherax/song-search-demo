@@ -10,7 +10,7 @@ body {
 .input-container input {
   padding: 1px 5px;
   border: 1px solid #ccc;
-  font-size: 0.8em;
+  font-size: 0.7em;
 }
 
 .welcome {
@@ -29,4 +29,16 @@ body {
 
 .search-results li:nth-child(2n) {
   background-color: oldlace;
+}
+
+.search-results li i {
+  padding: 0 5px;
+}
+
+.search-results .song-name {
+  font-style: italic;
+}
+
+.search-results .song-duration {
+  font-size: 0.55em;
 }
