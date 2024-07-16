@@ -13,6 +13,10 @@ body {
   font-size: 0.7em;
 }
 
+.input-container input::placeholder {
+  font-size: 0.6em;
+}
+
 .welcome {
   margin-bottom: 2rem;
 }
@@ -27,8 +31,12 @@ body {
   color: #555;
 }
 
-.search-results li {
+.search-results li:not(.empty-results) {
   cursor: pointer;
+}
+
+.search-results li.empty-results {
+  cursor: default;
 }
 
 .search-results li:nth-child(2n) {

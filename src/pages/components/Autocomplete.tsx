@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import debounce from '@/lib/debounce';
 import msToMinutesFormat from '@/lib/msToMinutesFormat';
@@ -15,6 +15,7 @@ export default function Autocomplete(props: AutocompleteProps) {
   const [searchInput, setSearchInput] = React.useState("");
   const [results, setResults] = React.useState<SongApiResponse["items"]>([]);
   const [songDetails, setSongDetails] = React.useState<Song | null>(null);
+  const [isEmpty, setIsEmpty] = useState(false);
 
   // used useCallback to save the state of the debounced callback (bc of render)
   const debounceHttpRequest = React.useCallback(
@@ -25,6 +26,7 @@ export default function Autocomplete(props: AutocompleteProps) {
       getSongsByArtistMemo(query)
         .then((data: SongApiResponse) => {
           logger.log('data:', data);
+          setIsEmpty(!data.items.length);
           setResults(data.items);
         });
     }, props.debounceMs),
@@ -34,19 +36,16 @@ export default function Autocomplete(props: AutocompleteProps) {
     const query = evt.target.value;
     setSearchInput(query);
     setSongDetails(null);
+  };
 
-    if (query.length > 1) {
+  const handleOnKeyUp = (evt: React.KeyboardEvent<HTMLInputElement>) => {
+    const query = (evt.target as HTMLInputElement).value.trimStart();
+    const hasValidSpace = query.length > 1 && SPACE_KEYS.includes(evt.key);
+    if (query.length > 1 || hasValidSpace) {
       debounceHttpRequest(query);
     } else {
       setResults([]);
-    }
-  };
-
-  const handleOnKeyDown = (evt: React.KeyboardEvent<HTMLInputElement>) => {
-    const query = (evt.target as HTMLInputElement).value;
-    const key = evt.key;
-    if (SPACE_KEYS.includes(key)) {
-      debounceHttpRequest(query);
+      setIsEmpty(true);
     }
   };
 
@@ -57,11 +56,15 @@ export default function Autocomplete(props: AutocompleteProps) {
   return (
     <React.Fragment>
         <div className='input-container'>
-          <input id="search" value={searchInput} onChange={handleOnchange} onKeyDown={handleOnKeyDown}></input>
+          <input id='search' value={searchInput}
+            placeholder='Type artist name...'
+            onChange={handleOnchange}
+            onKeyUp={handleOnKeyUp}>
+          </input>
         </div>
         <div className='results-container'>
           <ul className="search-results">
-            {!results.length && <li className="empty-results">There are no matches</li>}
+            {isEmpty && <li className="empty-results">There are no matches</li>}
             {results.map((song)=> {
               return (
                 <li key={`item-${song.id}`} onClick={onSuggestionClick(song)}>

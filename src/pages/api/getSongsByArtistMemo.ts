@@ -8,7 +8,7 @@ const cache = new Map<string, Promise<SongApiResponse>>();
 const baseURL = 'http://localhost:2000/api';
 
 export default function getSongsByArtistMemo(query: string): Promise<SongApiResponse> {
-  query = encodeURI(query.trim());
+  query = encodeURI(query.trimStart().replace(/\s+/g, ' '));
   if (cache.has(query)) {
     logger.info('⚡️ Cached response');
     return cache.get(query) as Promise<SongApiResponse>;
